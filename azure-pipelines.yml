@@ -36,11 +36,14 @@ jobs:
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
     steps:
     - task: TerraformTask@5
-      displayName: terraform_init
+      displayName: terraform init
       inputs:
         provider: 'azurerm'
         command: 'init'
         backendServiceArm: 'pipelineservice'
+        backendAzureRmStorageAccountName: 'bandgobhi'
+        backendAzureRmContainerName: 'statefile'
+        backendAzureRmKey: 'terraform.tfstate'
     - task: TerraformTask@5
       displayName: terraform_apply
       
