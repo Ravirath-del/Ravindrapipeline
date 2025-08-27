@@ -88,3 +88,7 @@ resource "azurerm_resource_group" "rahuliya43" {
     location = "east us"
   
 }
+resource "azurerm_resource_group" "rahuliya44" {
+    name = "shree-rg44"
+    location = "east us"
+}
