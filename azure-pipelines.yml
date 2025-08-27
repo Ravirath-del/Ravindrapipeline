@@ -33,6 +33,7 @@ jobs:
 
   - job: terraform_apply
     dependsOn: terraform_init_to_plan
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
     steps:
     - task: TerraformTask@5
       displayName: terraform_init
@@ -42,7 +43,7 @@ jobs:
         backendServiceArm: 'pipelineservice'
     - task: TerraformTask@5
       displayName: terraform_apply
-      condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+      
       inputs:
         provider: 'azurerm'
         command: 'apply'
