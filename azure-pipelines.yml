@@ -2,6 +2,11 @@ trigger:
   - main
   - feature/*
 pool: pipelinepool
+parameters:
+  - name: runScanning
+    displayName: 'Run Scanning Job?'
+    type: boolean
+    default: true
 
 jobs:
   - job: terraform_init_to_plan
@@ -31,6 +36,7 @@ jobs:
         command: 'plan'
         environmentServiceNameAzureRM: 'pipelineservice'
   - job: scanning_code
+    condition: eq('${{ parameters.runScanning }}', true)
     steps:
     - task: tfsec@1
       inputs:
