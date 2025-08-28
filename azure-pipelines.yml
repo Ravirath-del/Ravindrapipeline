@@ -35,6 +35,7 @@ jobs:
         provider: 'azurerm'
         command: 'plan'
         environmentServiceNameAzureRM: 'pipelineservice'
+
   - job: scanning_code
     condition: eq('${{ parameters.runScanning }}', true)
     steps:
@@ -42,15 +43,18 @@ jobs:
       inputs:
         version: 'v1.26.0'
     
-  - job: Manual_Validation
+  - job: ApprovalJob
+    dependsOn: terraform_init_to_plan
+    displayName: "Manual Validation Required"
     pool: server
-
     steps:
-        - task: ManualValidation@1
-          inputs:
-            notifyUsers: 'ravindrarathore92@gmail.com'
-            approvers: 'ravindrarathore92@gmail.com'
-            instructions: 'scanning the code'
+    - task: ManualValidation@0
+      inputs:
+        notifyUsers: |
+          ravindrarathore92@gmail.com
+        instructions: 'Please validate the Terraform plan before applying.'
+        onTimeout: 'reject'
+        timeout: '1d'
 
   - job: terraform_apply
     dependsOn: terraform_init_to_plan
