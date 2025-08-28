@@ -6,7 +6,7 @@ parameters:
   - name: runScanning
     displayName: 'Run Scanning Job?'
     type: boolean
-    default: true
+    default: false
 
 jobs:
   - job: terraform_init_to_plan
