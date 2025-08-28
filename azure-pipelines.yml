@@ -30,6 +30,16 @@ jobs:
         provider: 'azurerm'
         command: 'plan'
         environmentServiceNameAzureRM: 'pipelineservice'
+  - job: scanning_code
+    steps:
+    
+  - job: Manual_Validation
+    steps:
+    - task: ManualValidation@1
+      inputs:
+        notifyUsers: 'ravindrarathore92@gmail.com'
+        approvers: 'ravindrarathore92@gmail.com'
+        instructions: 'scanning the code'
 
   - job: terraform_apply
     dependsOn: terraform_init_to_plan
